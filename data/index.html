@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ESP32 Web Server</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+</head>
+<body>
+  <script>
+  function move(direction){
+    var url = "/api/move";
+    data = {
+      command: direction,
+    };
+    fetch(url, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'  
+      },
+      body: JSON.stringify(data)
+    })
+  }
+
+	function toJSONString( form ) {
+		var obj = {};
+		var elements = form.querySelectorAll( "input, select, textarea" );
+		for( var i = 0; i < elements.length; ++i ) {
+			var element = elements[i];
+			var name = element.name;
+			var value = element.value;
+
+			if( name ) {
+				obj[ name ] = value;
+			}
+		}
+
+		return obj;
+	}
+
+  function sendConfig(){
+      var url = "/api/config";
+      data = toJSONString(document.forms.config);
+      fetch(url, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'  
+        },
+        body: JSON.stringify(data)
+      });
+    }
+  
+    async function getConfig()
+    {
+      var url = "api/config";
+      var data = await fetch(url);
+      var json = await data.json();
+      var obj = document.forms.config;
+      for(key in json)
+      {
+        if(obj.hasOwnProperty(key))
+          document.forms.config[key].value = json[key];
+      }
+    }
+
+    async function getStatus()
+    {
+      var url = "api/status";
+      var data = await fetch(url);
+      var json = await data.json();
+      var obj = document.status.value = json;
+    }
+
+    getConfig();
+  </script>
+
+  <h1>Projector foldable screen</h1>
+  
+  <p><button class="button" onclick="move('up')">Up</button></p>
+  <p><button class="button button2" onclick="move('stop')">Stop</button></p>
+  <p><button class="button" onclick="move('down')">Down</button></p>
+  
+  <h1>Config</h1>
+  <p><form name="config">
+    <label>Up time</label>
+    <input type="number" min="1" max="255" name="up_time">
+    <label>Down time</label>
+    <input type="number" min="1" max="255" name="down_time">
+    <label>FTP enabled</label>
+    <input type="number" min="0" max="1" name="ftp_enabled">
+    <label>OTA enabled</label>
+    <input type="number" min="0" max="1" name="ota_enabled">
+    <label>Screen position</label>
+    <input type="number" min="0" max="255" name="screen_position">
+  </form></p>
+  <p><button onclick="sendConfig()">Send Config</button></p>
+
+  <h1>Status</h1>
+  <label name="status">Status</label>
+</body>
+</html>
