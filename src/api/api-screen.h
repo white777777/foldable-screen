@@ -1,10 +1,11 @@
+#pragma once
 #include <ESPAsyncWebServer.h>
 #include <screen-controller.h>
 
-class LegacyApiController
+class ApiScreenController
 {
     private:
         ScreenController & _screenController;
     public:
-        LegacyApiController(AsyncWebServer& server, ScreenController& screenController);
+        ApiScreenController(AsyncWebServer & server, ScreenController & screenController);
 };

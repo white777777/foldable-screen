@@ -3,6 +3,7 @@
 #include <EEPROM.h>
 #include <array>
 // #include <IonDB.h>
+#include <ESP8266WiFi.h>
 
 enum CONFIG_NODES{
     CONFIG_VERSION = 0,
@@ -27,6 +28,17 @@ class ConfigProvider
 
         uint8_t Get(CONFIG_NODES node) const;
         void Set(CONFIG_NODES node, const uint8_t& value);
+
+        //Mqtt
+        IPAddress GetMqttHost();
+        int GetMqttPort();
+
+        //Wifi
+        String GetSsid();
+        String GetPassword();
+
+        //Blynk 
+        String GetBlynkAuth();
 };
 
 //     private:

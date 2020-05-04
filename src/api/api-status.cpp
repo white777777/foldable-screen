@@ -1,5 +1,7 @@
 #include <api-status.h>
 #include <ArduinoJson.h>
+#include <TimeLib.h>
+#include <NtpClientLib.h>
 
 ApiStatusController::ApiStatusController(AsyncWebServer & server)
 {
@@ -9,6 +11,9 @@ ApiStatusController::ApiStatusController(AsyncWebServer & server)
         DynamicJsonDocument root(1024);
         root["heap"] = ESP.getFreeHeap();
         root["ssid"] = WiFi.SSID();
+        root["time"] = now();
+        root["time"] = NTP.getTimeDateString();
+        root["uptime"] = NTP.getUptimeString();
         serializeJson(root, *response);
         request->send(response);
     });

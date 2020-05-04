@@ -1,7 +1,7 @@
 #ifndef KEY_CONTROLLER_H
 #define KEY_CONTROLLER_H
 
-#include <TaskSchedulerInclude.h>
+#include <TaskSchedulerDeclarations.h>
 
 class KeyController
 {

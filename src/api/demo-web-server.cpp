@@ -3,7 +3,6 @@
 #include "AsyncJson.h"
 #include "ArduinoJson.h"
 
-
 DemoWebServer::DemoWebServer(ScreenController & screenController, FS & fs, ConfigProvider & configProvider)
 : _apiScreenController(_server, screenController)
 , _apiConfigController(_server, configProvider)

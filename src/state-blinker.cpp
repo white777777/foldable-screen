@@ -2,7 +2,7 @@
   #include <Arduino.h>
 
   StateBlinker::StateBlinker(Scheduler & ts)
-  : t(1*TASK_SECOND, -1L, [this](){Do();}, &ts, false)
+  : t(1*TASK_SECOND, TASK_FOREVER, [this](){Do();}, &ts, false)
   {
     pinMode(16, OUTPUT);
     digitalWrite(16, HIGH);

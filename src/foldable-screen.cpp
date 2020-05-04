@@ -1,10 +1,11 @@
 #include <foldable-screen.h>
 
-FoldableScreen::FoldableScreen(Scheduler &ts, FS& fs, ConfigProvider& configProvider, StateBlinker & blinker)
+FoldableScreen::FoldableScreen(Scheduler &ts, FS& fs, ConfigProvider& configProvider, StateBlinker & blinker,
+ScreenController & screenController, DemoWebServer & demoWebServer)
 : _upKey(ts)
 , _downKey(ts)
-, _screenController(ts, configProvider, blinker)
-, _demoWebServer(_screenController, fs, configProvider)
+, _screenController(screenController)
+, _demoWebServer(demoWebServer)
 {
     _upKey.SetCallback([this](KeyController& k, bool isPressed){
         if(isPressed)

@@ -34,7 +34,7 @@ void KeyController::SetCallback(std::function<void(KeyController&, bool)> callba
 
 KeyController::KeyController(Scheduler& ts): 
 _ts(ts),
-_checkTimeoutTask(0, 1)
+_checkTimeoutTask(TASK_IMMEDIATE, TASK_ONCE)
 {
     _checkTimeoutTask.setCallback([&]{
         ReleaseKey();
